@@ -5,7 +5,7 @@
 # MANEJO DE FUNCIONES
 # CREACION DE CLASES
             #(desde, hasta, incremento/decremento)
-""" for (int i; i<5; i++){
+""" for (int i; i<5; i++){ en lenguaje de c++
 
 } """
 #Entrada 6 proceso: 1+2+3+4+5 salida 21
