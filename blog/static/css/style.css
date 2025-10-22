@@ -1,0 +1,22 @@
+body {
+    background-color: brown;
+}
+
+h1 {
+    background-color: chocolate;
+}
+
+form {
+    background-color: rgb(207, 197, 176);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.btn {
+    background-color: rgb(62, 175, 47);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
