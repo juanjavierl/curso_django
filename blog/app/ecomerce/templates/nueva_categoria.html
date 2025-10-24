@@ -1,0 +1,12 @@
+{% extends 'inicio.html' %}
+{% load crispy_forms_tags %}
+{% block contenidos %}
+<div class="container col-md-6 col-lg-4">
+    <h2>Registrar Nueva Categoría</h2>
+    <form action="/nueva_categoria/" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Guardar Categoría</button>
+    </form>
+</div>
+{% endblock contenidos %}
