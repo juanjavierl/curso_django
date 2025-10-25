@@ -1,0 +1,12 @@
+{% extends 'inicio.html' %}
+{% load crispy_forms_tags %}
+{% block contenidos %}
+<div class="container col-md-6 col-lg-4">
+    <h2>Editar Producto: {{ producto.nombre }}</h2>
+    <form action="/editar_producto/{{ producto.id }}/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
+{% endblock contenidos %}
