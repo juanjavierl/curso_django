@@ -1,4 +1,4 @@
-from .models import *
+from .models import Categoria, Producto
 from django import forms
 
 class FormCategoria(forms.ModelForm):
@@ -9,4 +9,4 @@ class FormCategoria(forms.ModelForm):
 class FormProducto(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = '__all__'#muestra todos los campos del modelo
+        fields = '__all__'

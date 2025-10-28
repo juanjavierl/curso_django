@@ -1,0 +1,13 @@
+{% extends 'inicio.html' %}
+{% load crispy_forms_tags %}
+
+{% block contenidos %}
+    <div class="container col-md-6 col-lg-4">
+        <h1>Eliminar Producto: {{ producto.nombre|title }}</h1>
+        <form action="/eliminar_producto/{{ producto.id }}/" method="POST">
+            {% csrf_token %}
+            <p>¿Estás seguro de que deseas eliminar este producto?</p>
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form>
+    </div>
+{% endblock contenidos %}

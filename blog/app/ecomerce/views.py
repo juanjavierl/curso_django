@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from .models import Categoria, Producto
-from .forms import FormCategoria, FormProducto
+from .forms import *
 # Create your views here.
 def ver_categorias(request):
     """
@@ -20,11 +20,9 @@ def nueva_categoria(request):
         form =FormCategoria()
     return render(request, 'nueva_categoria.html', {'form': form})
 
+
 def ver_productos(request):
-    """
-    Select * from Producto;
-    """
-    productos = Producto.objects.all()
+    productos = Producto.objects.all().order_by('-id')
     return render(request, 'ver_productos.html', {'productos': productos})
 
 def registrar_producto(request):
@@ -38,7 +36,10 @@ def registrar_producto(request):
     return render(request, 'registrar_producto.html', {'form': form})
 
 def editar_producto(request, id_producto):
-    producto = Producto.objects.get(id=id_producto)#select * from Producto where id=id_producto;
+    """
+    select  from Producto where id=id_producto
+    """
+    producto = Producto.objects.get(id=id_producto)
     if request.method == 'POST':
         form = FormProducto(request.POST, request.FILES, instance=producto)
         if form.is_valid():
@@ -49,6 +50,13 @@ def editar_producto(request, id_producto):
     return render(request, 'editar_producto.html', {'form': form, 'producto': producto})
 
 def eliminar_producto(request, id_producto):
-    producto = Producto.objects.get(id=id_producto)#select * from Producto where id=id_producto;
-    producto.delete()#delete from Producto where id=id_producto;
-    return redirect('ver_productos')
+    """
+    select * from Producto where id=id_producto
+    """
+    if request.method == 'POST':
+        producto = Producto.objects.get(id=id_producto)
+        producto.delete()
+        return redirect('ver_productos')
+    else:
+        producto = Producto.objects.get(id=id_producto)
+        return render(request, 'eliminar_producto.html', {'producto': producto})
