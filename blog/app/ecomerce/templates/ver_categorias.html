@@ -10,6 +10,7 @@
             <th scope="col">Id</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +20,9 @@
                 <th scope="row">{{ c.id }}</th>
                 <td>{{ c.nombre }}</td>
                 <td>{{ c.descripcion|title }}</td>
+                <th>
+                    <a href="/filtrar_productos/{{ c.id }}/">Ver Productos</a>
+                </th>
             </tr>
         {% endfor %}
             

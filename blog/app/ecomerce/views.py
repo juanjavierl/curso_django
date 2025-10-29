@@ -60,3 +60,11 @@ def eliminar_producto(request, id_producto):
     else:
         producto = Producto.objects.get(id=id_producto)
         return render(request, 'eliminar_producto.html', {'producto': producto})
+    
+def filtrar_productos(request, id_categoria):
+    """
+    select * from Producto where categoria_id=id_categoria
+    """
+    productos = Producto.objects.filter(categoria_id=id_categoria)
+    print(productos)
+    return render(request, 'ver_productos.html', {'productos': productos})
