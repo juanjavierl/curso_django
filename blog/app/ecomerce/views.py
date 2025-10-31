@@ -1,6 +1,9 @@
 from django.shortcuts import redirect, render
+from django.contrib import messages
+
 from .models import Categoria, Producto
 from .forms import *
+
 # Create your views here.
 def ver_categorias(request):
     """
@@ -30,7 +33,10 @@ def registrar_producto(request):
         form = FormProducto(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Producto registrado exitosamente.")
             return redirect('ver_productos')
+        else:
+            messages.error(request, "Error al registrar el producto. Por favor, verifica los datos ingresados.")
     else:
         form = FormProducto()
     return render(request, 'registrar_producto.html', {'form': form})

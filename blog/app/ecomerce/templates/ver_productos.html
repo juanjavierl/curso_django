@@ -12,6 +12,7 @@
             <th scope="col">Descripción</th>
             <th scope="col">Precio</th>
             <th scope="col">Categoría</th>
+            <th scope="col">Fecha de Creación</th>
             <th scope="col">Imagen</th>
             <th scope="col">Acciones</th>
         </tr>
@@ -25,6 +26,7 @@
                 <td>{{ p.descripcion|title }}</td>
                 <td>{{ p.precio }}</td>
                 <td>{{ p.categoria.nombre }}</td>
+                <td>{{ p.fecha_creacion|date:"d/m/Y H:i:s a" }}</td>
                 <th>
                     
                     {% if p.imagen %}

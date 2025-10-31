@@ -1,4 +1,5 @@
 from django.contrib import messages
+import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -27,7 +28,9 @@ def salir(request):
 @login_required(login_url='/')
 def inicio(request):
     user = request.user
-    return render(request, 'inicio.html', {'usuario':user})
+    fecha_hora_actual = datetime.datetime.now()
+    fecha_convertida = fecha_hora_actual.strftime("%A/%B/%Y %I:%M:%S %p")
+    return render(request, 'inicio.html', {'usuario':user, 'f_actual':fecha_convertida})
 
 def registroUser(request):
     if request.method == 'POST':
