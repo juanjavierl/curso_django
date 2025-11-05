@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+{% block formularios_user %}
+    <button class="btn btn-primary" type="button" id="open-cart">
+        <span id="card-count">Total Productos: {{ total_productos }}</span>
+    </button>
+    <div class="row">
+    {% for p in productos %}
+        <div class="col-6 col-md-4 col-lg-2 mb-3">
+            <div class="card h-100" style="width: 100%;">
+                <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.nombre }}">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ p.nombre }}</h5>
+                    <p class="card-text">{{ p.descripcion }}</p>
+
+                    <!-- Botón al fondo -->
+                    <button class="btn btn-primary w-100 mt-auto add-to-cart" data-id="{{ p.id }}">
+                        Agregar al Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+        
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart').click(function() {
+                var productId = $(this).data('id');
+                $.ajax({
+                    url: '/agregar_al_carrito/',
+                    method: 'POST',
+                    data: {
+                        'product_id': productId,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#card-count').text('Total Productos: ' + response.total_items);
+                        $('.mensaje_exito').text(response.message);
+                        const toast = new bootstrap.Toast($('.toast')[0], { delay: 4000 });
+                        toast.show();
+                    },
+                    error: function() {
+                        alert('Error al agregar el producto al carrito.');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock formularios_user %}
+    

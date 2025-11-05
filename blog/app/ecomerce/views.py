@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
@@ -74,3 +75,35 @@ def filtrar_productos(request, id_categoria):
     productos = Producto.objects.filter(categoria_id=id_categoria)
     print(productos)
     return render(request, 'ver_productos.html', {'productos': productos})
+
+def catalogo(request):
+    productos = Producto.objects.all().order_by('-id')
+    cart = request.session.get('cart', {})# Obtener el carrito de la sesión
+    total_productos = sum(item.get('cantidad', 0) for item in cart.values())  # Sumar las cantidades de productos en el carrito
+    return render(request, 'catalogo.html', {'productos': productos, 'total_productos': total_productos})
+
+def agregar_al_carrito(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        product = Producto.objects.get(id=product_id)
+
+        cart = request.session.get('cart', {})
+        if str(product_id) in cart:
+            cart[str(product_id)]['cantidad'] += 1
+        else:
+            cart[str(product_id)] = {
+                'nombre': product.nombre,
+                'precio': float(product.precio),
+                'cantidad': 1,
+                'imagen': product.imagen.url if product.imagen else '',
+            }
+        print(cart)
+        request.session['cart'] = cart
+        request.session.modified = True
+
+        total_items = sum(item['cantidad'] for item in cart.values())
+        message = f"✅ Producto '{product.nombre}' agregado al carrito."
+        return JsonResponse({'success': True, 'total_items': total_items, 'message': message})
+
+    return JsonResponse({'success': False}, status=400)
+        
